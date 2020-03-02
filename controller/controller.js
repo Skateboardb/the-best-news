@@ -10,11 +10,7 @@ const Article = require('../models/Article.js');
 
 router.get('/', (req, res) => {
 	Article.find({}).then(function(data) {
-		const hbsObject = {
-			articles: data
-		};
-		console.log(hbsObject.articles);
-		res.render('index', hbsObject);
+		res.render('index');
 	});
 });
 
