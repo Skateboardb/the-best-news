@@ -10,10 +10,19 @@ const articleSchema = new Schema({
 		type: String,
 		required: true
 	},
+	summary: {
+		type: String,
+		required: true
+	},
 	comment: {
 		type: Schema.Types.ObjectId,
 		ref: 'Comment'
+	},
+	saved: {
+		type: Boolean,
+		required: true,
+		default: false
 	}
 });
-const article = mongoose.model('article', articleSchema);
-module.exports = article;
+const Article = mongoose.model('Article', articleSchema);
+module.exports = Article;
