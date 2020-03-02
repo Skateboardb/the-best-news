@@ -9,7 +9,13 @@ const Comment = require('../models/Comment.js');
 const Article = require('../models/Article.js');
 
 router.get('/', (req, res) => {
-	res.render('index');
+	Article.find({}).then(function(data) {
+		const hbsObject = {
+			articles: data
+		};
+		console.log(hbsObject.articles);
+		res.render('index', hbsObject);
+	});
 });
 
 router.get('/scrape', function(req, res) {
@@ -62,8 +68,7 @@ router.get('/scrape', function(req, res) {
 });
 
 router.get('/articles', function(req, res) {
-	Article.find({})
-	.exec(function(err, doc) {
+	Article.find({}).exec(function(err, doc) {
 		if (err) {
 			console.log(error);
 		} else {

@@ -14,4 +14,15 @@
 
     </div>
 </div>
-{{> article}}
+{{!-- {{> article}} --}}
+<div class="section">
+    <div class="container">
+        <h2 id="results">Article Results</h2>
+        <div id="scraped-articles">
+            {{#each articles}}
+            {{link}}
+            {{/each}}
+
+        </div>
+    </div>
+</div>
