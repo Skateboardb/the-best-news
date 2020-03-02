@@ -29,12 +29,19 @@ router.get('/scrape', function(req, res) {
 				.children('span.newsblock-story-card__info')
 				.children('h2')
 				.children('a')
-				.text();
+				.text()
+				.split(`\n`)[0];
 
 			result.link = $(element)
 				.children('span.newsblock-story-card__info')
 				.children('h2')
-				.children('a');
+				.children('a')
+				.attr('href');
+
+			result.summary = $(element)
+				.children('span.newsblock-story-card__info')
+				.children('p')
+				.text();
 
 			console.log(result);
 			// Create a new Article using the `result` object built from scraping
