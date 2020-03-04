@@ -41,5 +41,13 @@ $(document).ready(() => {
 			.children('i.fa-bookmark')
 			.removeClass('fa-bookmark')
 			.addClass('fa-check-circle');
+
+		const articleID = $(this).attr('data-id');
+		console.log(articleID);
+
+		// $.ajax({
+		//     method: 'POST',
+		//     url: '/save/'
+		// })
 	});
 });
