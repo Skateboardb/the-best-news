@@ -29,14 +29,17 @@ $(document).ready(() => {
 					'<div class="col-1">' +
 					'   <button class="save-article button" data-id="' +
 					model._id +
-					' ">+</button>' +
+					' "><i class="fa fa-bookmark"></i></button>' +
 					'   </div>' +
 					'</div>'
 			);
 		}
 	});
 
-	$('.save-article').on('click', () => {
-		alert('hey!');
+	$(document).on('click', '.save-article', function() {
+		$(this)
+			.children('i.fa-bookmark')
+			.removeClass('fa-bookmark')
+			.addClass('fa-check-circle');
 	});
 });
