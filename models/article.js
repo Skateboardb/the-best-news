@@ -1,19 +1,44 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
-const articleSchema = new Schema({
-	title: {
-		type: String,
-		required: true
+const articleSchema = new Schema(
+	{
+		title: {
+			type: String,
+			required: true
+		},
+		link: {
+			type: String,
+			required: true
+		},
+		summary: {
+			type: String,
+			required: true
+		},
+		comments: [
+			{
+				type: Schema.Types.ObjectId,
+				ref: 'Comment'
+			}
+		],
+		img: {
+			type: String,
+			required: true
+		},
+		saved: {
+			type: Boolean,
+			required: true,
+			default: false
+		}
 	},
-	link: {
-		type: String,
-		required: true
-	},
-	comment: {
-		type: Schema.Types.ObjectId,
-		ref: 'Comment'
+	{
+		toObject: {
+			virtuals: true
+		},
+		toJSON: {
+			virtuals: true
+		}
 	}
-});
-const article = mongoose.model('article', articleSchema);
-module.exports = article;
+);
+const Article = mongoose.model('Article', articleSchema);
+module.exports = Article;
