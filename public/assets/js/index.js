@@ -45,9 +45,14 @@ $(document).ready(() => {
 		const articleID = $(this).attr('data-id');
 		console.log(articleID);
 
-		// $.ajax({
-		//     method: 'POST',
-		//     url: '/save/'
-		// })
+		$.ajax({
+			method: 'POST',
+			url: '/save/' + articleID,
+			data: {
+				saved: true
+			}
+		}).done(data => {
+			console.log('data: ', data);
+		});
 	});
 });
