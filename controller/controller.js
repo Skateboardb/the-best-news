@@ -45,6 +45,12 @@ router.get('/scrape', function(req, res) {
 				.children('p')
 				.text();
 
+			result.img = $(element)
+				.children('span.newsblock-story-card__image-link')
+				.children('span')
+				.children('img')
+				.attr('src');
+
 			console.log(result);
 			// Create a new Article using the `result` object built from scraping
 			Article.create(result)

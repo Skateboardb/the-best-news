@@ -21,6 +21,10 @@ const articleSchema = new Schema(
 				ref: 'Comment'
 			}
 		],
+		img: {
+			type: String,
+			required: true
+		},
 		saved: {
 			type: Boolean,
 			required: true,
