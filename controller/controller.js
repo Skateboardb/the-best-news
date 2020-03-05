@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
 	});
 });
 
-router.get('/scrape', function(req, res) {
+router.get('/scrape', (req, res) => {
 	// First, we grab the body of the html with request
 	axios.get('https://www.buzzfeednews.com').then(function(response) {
 		// Then, we load that into cheerio and save it to $ for a shorthand selector
@@ -79,4 +79,19 @@ router.get('/articles', function(req, res) {
 	});
 });
 
+router.post('/save/:id', (req, res) => {
+	Article.findOneAndUpdate({ _id: req.params.id }, { saved: true }).exec(
+		(err, doc) => {
+			if (err) {
+				console.log(err);
+			} else {
+				console.log('doc: ', doc);
+			}
+		}
+	);
+});
+
+router.get('/saved', (req, res) => {
+	res.render('saved');
+});
 module.exports = router;
