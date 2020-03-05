@@ -141,7 +141,7 @@ router.post('/comment/:id', (req, res) => {
 				if (err) {
 					console.log(err);
 				} else {
-					log('doc', doc);
+					console.log('doc', doc);
 					res.send(doc);
 				}
 			});

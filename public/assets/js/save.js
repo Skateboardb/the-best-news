@@ -55,7 +55,7 @@ $(document).ready(() => {
 	});
 
 	$(document).on('click', '.comment-button', function() {
-		$('#commentModal').modal();
+		$('#comment-modal').modal();
 
 		const articleID = $(this).attr('data-id');
 		console.log(articleID);
@@ -79,5 +79,21 @@ $(document).ready(() => {
 		});
 	});
 
-	$(document).on('click');
+	$(document).on('click', '#save-comment', function() {
+		const articleID = $(this).attr('data-id');
+
+		$.ajax({
+			method: 'POST',
+			url: '/comment/' + articleID,
+			data: {
+				body: $('#new-comment').val()
+			}
+		}).done(function(data) {
+			console.log('data: ', data);
+		});
+
+		$('#new-comment').val('');
+
+		$('#comment-modal').modal();
+	});
 });
