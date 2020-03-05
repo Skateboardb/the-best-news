@@ -25,7 +25,9 @@ $(document).ready(() => {
 						'   <button class="remove-article button" data-id="' +
 						model._id +
 						' "><i class="fa fa-trash"></i></button>' +
-						'   </div>' +
+						'  <button class="comment-button" data-id="' +
+						model._id +
+						' "><i class="fa fa-comments"></i></button> </div>' +
 						'</div>'
 				);
 			}
@@ -51,4 +53,31 @@ $(document).ready(() => {
 			console.log('data: ', data);
 		});
 	});
+
+	$(document).on('click', '.comment-button', function() {
+		$('#commentModal').modal();
+
+		const articleID = $(this).attr('data-id');
+		console.log(articleID);
+
+		$.ajax({
+			method: 'GET',
+			url: '/articles/' + articleID
+		}).done(data => {
+			console.log('data: ', data);
+			$('#modal-title').prepend('Article Comments for: ' + data.title);
+
+			for (let i = 0; i < data.comments.length; i++) {
+				$('#comment-block').append(
+					'<div class="comment-div">' +
+						'<p class="comment-text">' +
+						data.comments[i].body +
+						'</p></div>'
+				);
+			}
+			$('#save-comment').attr('data-id', data._id);
+		});
+	});
+
+	$(document).on('click');
 });

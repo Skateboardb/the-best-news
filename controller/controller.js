@@ -8,6 +8,8 @@ const cheerio = require('cheerio');
 const Comment = require('../models/Comment.js');
 const Article = require('../models/Article.js');
 
+// ============================= HOME PAGE =============================
+
 router.get('/', (req, res) => {
 	Article.find({}).then(function(data) {
 		res.render('index');
@@ -79,6 +81,8 @@ router.get('/articles', function(req, res) {
 	});
 });
 
+// ============================= SAVED ARTICLES =============================
+
 router.get('/saved', (req, res) => {
 	res.render('saved');
 });
@@ -107,6 +111,19 @@ router.post('/unsave/:id', (req, res) => {
 		}
 	);
 	location.reload();
+});
+
+router.get('/articles/:id', (req, res) => {
+	Article.findOne({ _id: req.params.id })
+		.populate('comments')
+
+		.exec(function(error, doc) {
+			if (error) {
+				console.log(error);
+			} else {
+				res.json(doc);
+			}
+		});
 });
 
 router.post('/comment/:id', (req, res) => {
