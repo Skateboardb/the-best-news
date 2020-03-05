@@ -65,7 +65,7 @@ router.get('/scrape', (req, res) => {
 		});
 
 		// If we were able to successfully scrape and save an Article, send a message to the client
-		res.send('Scrape Complete');
+		res.redirect('/');
 	});
 });
 
@@ -79,6 +79,11 @@ router.get('/articles', function(req, res) {
 	});
 });
 
+router.get('/saved', (req, res) => {
+	res.render('saved');
+});
+module.exports = router;
+
 router.post('/save/:id', (req, res) => {
 	Article.findOneAndUpdate({ _id: req.params.id }, { saved: true }).exec(
 		(err, doc) => {
@@ -91,7 +96,38 @@ router.post('/save/:id', (req, res) => {
 	);
 });
 
-router.get('/saved', (req, res) => {
-	res.render('saved');
+router.post('/unsave/:id', (req, res) => {
+	Article.findOneAndUpdate({ _id: req.params.id }, { saved: false }).exec(
+		(err, doc) => {
+			if (err) {
+				console.log(err);
+			} else {
+				console.log('doc removed: ', doc);
+			}
+		}
+	);
+	location.reload();
 });
-module.exports = router;
+
+router.post('/comment/:id', (req, res) => {
+	var newComment = new Comment(req.body);
+
+	newComment.save((error, newComment) => {
+		if (error) {
+			console.log(error);
+		} else {
+			Article.findOneAndUpdate(
+				{ _id: req.params.id },
+				{ $push: { comments: newComment._id } },
+				{ new: true }
+			).exec((err, doc) => {
+				if (err) {
+					console.log(err);
+				} else {
+					log('doc', doc);
+					res.send(doc);
+				}
+			});
+		}
+	});
+});
