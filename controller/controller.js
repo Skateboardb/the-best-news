@@ -5,8 +5,8 @@ const axios = require('axios');
 
 const cheerio = require('cheerio');
 
-const Comment = require('../models/Comment.js');
-const Article = require('../models/Article.js');
+const Comment = require('../models/comment.js');
+const Article = require('../models/article.js');
 
 // ============================= HOME PAGE =============================
 
