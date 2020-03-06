@@ -23,7 +23,8 @@ app.set('view engine', 'handlebars');
 
 app.use(express.static('public/'));
 
-mongoose.connect('mongodb://localhost/best_news');
+var URI = process.env.MONGODB_URI || 'mongodb://localhost/best_news';
+mongoose.connect(URI);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
