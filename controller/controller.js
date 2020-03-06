@@ -8,13 +8,15 @@ const cheerio = require('cheerio');
 const Comment = require('../models/Comment.js');
 const Article = require('../models/Article.js');
 
+// ============================= HOME PAGE =============================
+
 router.get('/', (req, res) => {
 	Article.find({}).then(function(data) {
 		res.render('index');
 	});
 });
 
-router.get('/scrape', function(req, res) {
+router.get('/scrape', (req, res) => {
 	// First, we grab the body of the html with request
 	axios.get('https://www.buzzfeednews.com').then(function(response) {
 		// Then, we load that into cheerio and save it to $ for a shorthand selector
@@ -65,7 +67,7 @@ router.get('/scrape', function(req, res) {
 		});
 
 		// If we were able to successfully scrape and save an Article, send a message to the client
-		res.send('Scrape Complete');
+		res.redirect('/');
 	});
 });
 
@@ -79,4 +81,70 @@ router.get('/articles', function(req, res) {
 	});
 });
 
+// ============================= SAVED ARTICLES =============================
+
+router.get('/saved', (req, res) => {
+	res.render('saved');
+});
 module.exports = router;
+
+router.post('/save/:id', (req, res) => {
+	Article.findOneAndUpdate({ _id: req.params.id }, { saved: true }).exec(
+		(err, doc) => {
+			if (err) {
+				console.log(err);
+			} else {
+				console.log('doc: ', doc);
+			}
+		}
+	);
+});
+
+router.post('/unsave/:id', (req, res) => {
+	Article.findOneAndUpdate({ _id: req.params.id }, { saved: false }).exec(
+		(err, doc) => {
+			if (err) {
+				console.log(err);
+			} else {
+				console.log('doc removed: ', doc);
+			}
+		}
+	);
+	location.reload();
+});
+
+router.get('/articles/:id', (req, res) => {
+	Article.findOne({ _id: req.params.id })
+		.populate('comments')
+
+		.exec(function(error, doc) {
+			if (error) {
+				console.log(error);
+			} else {
+				res.json(doc);
+			}
+		});
+});
+
+router.post('/comment/:id', (req, res) => {
+	var newComment = new Comment(req.body);
+
+	newComment.save((error, newComment) => {
+		if (error) {
+			console.log(error);
+		} else {
+			Article.findOneAndUpdate(
+				{ _id: req.params.id },
+				{ $push: { comments: newComment._id } },
+				{ new: true }
+			).exec((err, doc) => {
+				if (err) {
+					console.log(err);
+				} else {
+					console.log('doc', doc);
+					res.send(doc);
+				}
+			});
+		}
+	});
+});
