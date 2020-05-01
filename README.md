@@ -21,6 +21,7 @@ Several technologies have been pulled together to make this happen:
 * MLab
 * Axios
 * Heroku
+
 Enjoy the hosted version at https://the-best-news.herokuapp.com/
 
 
