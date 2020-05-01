@@ -110,7 +110,7 @@ router.post('/unsave/:id', (req, res) => {
 			}
 		}
 	);
-	location.reload();
+	res.redirect('/saved');
 });
 
 router.get('/articles/:id', (req, res) => {

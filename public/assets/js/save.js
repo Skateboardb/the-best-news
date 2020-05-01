@@ -22,12 +22,13 @@ $(document).ready(() => {
 						'   </p>' +
 						'</div>' +
 						'<div class="col-1">' +
-						'   <button class="remove-article button" data-id="' +
+						'<div class="row">' +
+						'   <button class="remove-article button col-5" data-id="' +
 						model._id +
 						' "><i class="fa fa-trash"></i></button>' +
-						'  <button class="comment-button" data-id="' +
+						'  <button class="comment-button col-5" data-id="' +
 						model._id +
-						' "><i class="fa fa-comments"></i></button> </div>' +
+						' "><i class="fa fa-comments"></i></button> </div></div>' +
 						'</div>'
 				);
 			}
@@ -51,6 +52,7 @@ $(document).ready(() => {
 			}
 		}).done(data => {
 			console.log('data: ', data);
+			window.location.reload();
 		});
 	});
 
