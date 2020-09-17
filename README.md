@@ -10,7 +10,7 @@ This was an exercise in dynamically getting data from a source that is easily re
 This is for anyone who reads Buzzfeed articles or wants to see an example of an article scraper that dynamically displays content at the click of a button. I chose Buzzfeed because the articles are free to access... No other reason.
 
 ## What's under the hood? 
-Several technologies have been pulled together to make this happen: 
+Several technologies were carefully stitched together to make this happen: 
 * NodeJS
 * NPM
 * Express
