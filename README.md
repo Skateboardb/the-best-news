@@ -1,5 +1,7 @@
 # Buzzfeed News Scraper
 
+![Main page after scraping](https://i.imgur.com/GCZEeUC.png)
+
 ## What Is This?
 Here, we have a simple app for scraping articles from popular news site Buzzfeed. Users are allowed to save scraped articles to a public collection, remove them, and leave comments.
 
